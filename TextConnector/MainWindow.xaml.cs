@@ -85,10 +85,13 @@ namespace BitmapEqualer
 
         private unsafe bool CheckIsBitmapEqual(Bitmap first, Bitmap second)
         {
-            var isEqual = true;
+            var isEqual = false;
 
-            var width = first.Width < second.Width ? first.Width : second.Width;
-            var height = first.Height < second.Height ? first.Height : second.Height;
+            var width = first.Width;
+            var height = first.Height;
+
+            if (width != second.Width || height != second.Height)
+                goto finish;
 
             var newBitmapData = first.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
             var userBitmapData = second.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
@@ -108,13 +111,11 @@ namespace BitmapEqualer
                     {
                         for (int i = 0; i < 4; i++)
                             if (*(userBitmapCurrentPosition++) != *(newBitmapCurrentPosition++))
-                            {
-                                isEqual = false;
                                 goto finish;
-                            }
                     }
                 }
                 userBitmapCurrentPosition = newBitmapCurrentPosition = userBitmapDataStartPosition = newBitmapDataStartPosition = null;
+                isEqual = true;
             }
             finally { }
 
