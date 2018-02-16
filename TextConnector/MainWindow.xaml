@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BitmapEqualer"
         mc:Ignorable="d"
-        Title="MainWindow" ResizeMode="NoResize" Height="100" Width="400">
+        Title="Попиксельный сверщик Bitmap" ResizeMode="NoResize" Height="160" Width="400">
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -14,13 +13,16 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="FirstFileButton" Content="Выбрать первый файл" HorizontalAlignment="Center" VerticalAlignment="Center" Click="FirstFile_onClick"/>
-        <Button x:Name="SecondFileButton" IsEnabled="False" Content="Выбрать второй файл" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SecondFile_Click" Grid.Column="1"/>
+        <Button x:Name="FirstFileButton" Padding="16,8" Margin="8" Content="Выбрать первый файл" HorizontalAlignment="Center" VerticalAlignment="Center" Click="FirstFile_onClick"/>
+        <Button x:Name="SecondFileButton" Padding="16,8" Margin="8" IsEnabled="False" Content="Выбрать второй файл" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SecondFile_Click" Grid.Column="1"/>
 
-        <CheckBox x:Name="IsSuccesCheckBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="1" IsEnabled="False"/>
+        <TextBlock x:Name="ResultTextBlock" TextAlignment="Center" FontSize="18" Margin="8" Grid.Row="1" Grid.ColumnSpan="2" Foreground="#FFD10505"/>
+
+        <CheckBox x:Name="IsSuccesCheckBox" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="2" IsEnabled="False"/>
     </Grid>
 </Window>

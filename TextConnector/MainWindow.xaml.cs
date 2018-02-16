@@ -8,7 +8,6 @@ namespace BitmapEqualer
 {
     public partial class MainWindow : Window
     {
-        string firstPath = "", secondPath = "";
         Bitmap firstBitmap, secondBitmap;
 
         public MainWindow()
@@ -32,12 +31,19 @@ namespace BitmapEqualer
             dialog.Filter = "Png Files (.png)|*.png";
             dialog.FileOk += (o, e) =>
             {
-                firstPath = dialog.FileName;
-                FirstFileButton.IsEnabled = false;
-                SecondFileButton.IsEnabled = true;
+                var path = dialog.FileName;
 
-                var fileStream = File.OpenRead(firstPath);
-                firstBitmap = new Bitmap(fileStream);
+                LoadBitmap(ref firstBitmap, path);
+                if (firstBitmap == null)
+                    ResultTextBlock.Text = "Не удалось загрузить изображение";
+                else
+                {
+                    FirstFileButton.IsEnabled = false;
+                    SecondFileButton.IsEnabled = true;
+                    IsSuccesCheckBox.IsChecked = false;
+
+                    ResultTextBlock.Text = "Выберите второе изображение";
+                }
             };
             dialog.ShowDialog();
         }
@@ -48,19 +54,33 @@ namespace BitmapEqualer
             dialog.Filter = "Png Files (.png)|*.png";
             dialog.FileOk += (o, e) =>
             {
-                secondPath = dialog.FileName;
+                var path = dialog.FileName;
+                LoadBitmap(ref secondBitmap, path);
+                if (secondBitmap == null)
+                    ResultTextBlock.Text = "Не удалось загрузить изображение";
+                else
+                {
+                    IsSuccesCheckBox.IsChecked = CheckIsBitmapEqual(firstBitmap, secondBitmap);
+                    ResultTextBlock.Text = (bool)IsSuccesCheckBox.IsChecked ? "Изображения идентичны" : "Изображения не идентичны";
 
-                var fileStream = File.OpenRead(secondPath);
-                secondBitmap = new Bitmap(fileStream);
-
-                IsSuccesCheckBox.IsChecked = CheckIsBitmapEqual(firstBitmap, secondBitmap);
-                firstBitmap.Dispose();
-                secondBitmap.Dispose();
+                    firstBitmap.Dispose();
+                    secondBitmap.Dispose();
+                }
 
                 FirstFileButton.IsEnabled = true;
                 SecondFileButton.IsEnabled = false;
             };
             dialog.ShowDialog();
+        }
+
+        private void LoadBitmap(ref Bitmap bitmap, string path)
+        {
+            try
+            {
+                var fileStream = File.OpenRead(path);
+                bitmap = new Bitmap(fileStream);
+            }
+            catch { }
         }
 
         private unsafe bool CheckIsBitmapEqual(Bitmap first, Bitmap second)
