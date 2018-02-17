@@ -21,7 +21,7 @@
         <Button x:Name="FirstFileButton" Padding="16,8" Margin="8" Content="Выбрать первый файл" HorizontalAlignment="Center" VerticalAlignment="Center" Click="FirstFile_onClick"/>
         <Button x:Name="SecondFileButton" Padding="16,8" Margin="8" IsEnabled="False" Content="Выбрать второй файл" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SecondFile_Click" Grid.Column="1"/>
 
-        <TextBlock x:Name="ResultTextBlock" TextAlignment="Center" FontSize="18" Margin="8" Grid.Row="1" Grid.ColumnSpan="2" Foreground="#FFD10505"/>
+        <TextBlock x:Name="ResultTextBlock" Text="Выберите первое изображение" TextAlignment="Center" FontSize="18" Margin="8" Grid.Row="1" Grid.ColumnSpan="2" Foreground="#FFD10505"/>
 
         <CheckBox x:Name="IsSuccesCheckBox" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="2" IsEnabled="False"/>
     </Grid>
